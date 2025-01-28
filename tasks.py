@@ -48,7 +48,7 @@ def order_robots_from_RobotSpareBin():
         
         store_as_pdf(order_number)
         screenshot_robot(order_number)
-        embed_screenshot_to_receipt(f"robot_{order_number}.png", f"output/{order_number}.pdf")
+        embed_screenshot_to_receipt(f"output/robot_{order_number}.png", f"output/{order_number}.pdf")
         order_another_robot()
     archive_receipts()
 
@@ -129,7 +129,7 @@ def screenshot_robot(order_number):
     """Take a screenshot of the ordered robot"""
     page = browser.page()
     element = page.locator("#robot-preview-image")
-    element.screenshot(path=f"robot_{order_number}.png")
+    element.screenshot(path=f"output/robot_{order_number}.png")
 
 def embed_screenshot_to_receipt(screenshot, pdf_file):
     """Embed the screenshot to the PDF receipt"""
@@ -149,4 +149,4 @@ def order_another_robot():
 def archive_receipts():
     """Create a ZIP archive of the receipts"""
     archive = Archive()
-    archive.archive_folder_with_zip("output", "output/receipts.zip", recursive=False)
+    archive.archive_folder_with_zip("output", "output/receipts.zip", include="*.pdf", recursive=False)
